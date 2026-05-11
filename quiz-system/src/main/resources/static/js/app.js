@@ -9,7 +9,7 @@ const API_BASE_URL = window.location.origin + '/api';
    ───────────────────────────────────────── */
 
 function goTo(page) {
-    window.location.href = "/";
+    window.location.href = page;
 }
 
 /**
@@ -23,7 +23,7 @@ function setSession(role, name, id) {
 
 function logout() {
     sessionStorage.clear();
-    goTo('QuizLogin.html');
+    goTo('index.html');
 }
 
 /* ─────────────────────────────────────────
@@ -72,7 +72,7 @@ async function teacherLogin(event) {
 
         if (response.ok) {
             const userData = await response.json();
-            setSession('teacher', userData.name, userData.tchrID);
+            setSession('teacher', userData.name, userData.tchrid);
             goTo('Teacher.html');
         } else {
             err.style.display = 'block';
@@ -164,15 +164,22 @@ async function publishQuiz(event) {
         });
     });
 
-    const response = await fetch(`${API_BASE_URL}/quizzes/create`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, questions })
-    });
+    try {
+        const response = await fetch(`${API_BASE_URL}/quizzes/create`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, questions })
+        });
 
-    if (response.ok) {
-        alert("✅ Quiz Successfully Published to Database!");
-        goTo('QuizLogin.html');
+        if (response.ok) {
+            alert("✅ Quiz Successfully Published to Database!");
+            goTo('index.html');
+        } else {
+            alert("❌ Failed to publish quiz. Please check the server.");
+        }
+    } catch (e) {
+        console.error("Publish error:", e);
+        alert("⚠️ Cannot connect to server. Make sure the backend is running.");
     }
 }
 
@@ -185,17 +192,28 @@ async function initStudentDashboard() {
     const id = sessionStorage.getItem('studentId');
     if (name) document.getElementById('student-name-label').textContent = `👤 ${name} (${id})`;
 
-    const response = await fetch(`${API_BASE_URL}/quizzes/list`);
-    const quizzes = await response.json();
-    const container = document.getElementById('quiz-list-container');
+    try {
+        const response = await fetch(`${API_BASE_URL}/quizzes/list`);
+        const quizzes = await response.json();
+        const container = document.getElementById('quiz-list-container');
 
-    container.innerHTML = quizzes.map(q => `
-        <div class="role-card">
-            <h3>${q.title}</h3>
-            <p>${q.questions.length} Questions</p>
-            <button onclick="startQuiz(${q.id})" class="role-btn">Start Quiz</button>
-        </div>
-    `).join('');
+        if (quizzes.length === 0) {
+            container.innerHTML = '<p style="text-align:center;color:#aaa;">⚠️ No quizzes available yet. Please wait for your teacher to publish one.</p>';
+            return;
+        }
+
+        container.innerHTML = quizzes.map(q => `
+            <div class="role-card">
+                <h3>${q.title}</h3>
+                <p>${q.questions.length} Questions</p>
+                <button onclick="startQuiz(${q.id})" class="role-btn">Start Quiz</button>
+            </div>
+        `).join('');
+    } catch (e) {
+        console.error("Failed to load quizzes:", e);
+        document.getElementById('quiz-list-container').innerHTML =
+            '<p style="color:red;text-align:center;">⚠️ Could not connect to server.</p>';
+    }
 }
 
 async function startQuiz(quizId) {
