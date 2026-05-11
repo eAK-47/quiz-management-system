@@ -23,7 +23,7 @@ function setSession(role, name, id) {
 
 function logout() {
     sessionStorage.clear();
-    goTo('QuizLogin.html');
+    goTo('index.html');
 }
 
 /* ─────────────────────────────────────────
