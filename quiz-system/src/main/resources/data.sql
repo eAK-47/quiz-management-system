@@ -23,14 +23,22 @@ INSERT INTO quiz (id, title)
 VALUES (1, 'Java OOP & Basics');
 
 -- 5. INSERT SAMPLE QUESTIONS
--- correct_option is 0=A, 1=B, 2=C, 3=D
-INSERT INTO question (question_text, correct_option, quiz_id)
-VALUES ('Which keyword is used to inherit a class in Java?', 1, 1); -- Option B: extends
+-- correct_option: 0=A(option1), 1=B(option2), 2=C(option3), 3=D(option4)
+INSERT INTO question (question_text, option1, option2, option3, option4, correct_option, quiz_id)
+VALUES ('Which keyword is used to inherit a class in Java?',
+        'implements', 'extends', 'inherits', 'super',
+        1, 1); -- Answer: B (extends)
 
-INSERT INTO question (question_text, correct_option, quiz_id)
-VALUES ('Which of these is NOT a pillar of OOP?', 3, 1); -- Option D: Compilation
+INSERT INTO question (question_text, option1, option2, option3, option4, correct_option, quiz_id)
+VALUES ('Which of these is NOT a pillar of OOP?',
+        'Encapsulation', 'Abstraction', 'Inheritance', 'Compilation',
+        3, 1); -- Answer: D (Compilation)
 
--- 6. (Optional) SEED A RESULT
--- This lets you test the 'View Results' logic immediately.
+INSERT INTO question (question_text, option1, option2, option3, option4, correct_option, quiz_id)
+VALUES ('What is the default value of an int variable in Java?',
+        '1', 'null', '0', '-1',
+        2, 1); -- Answer: C (0)
+
+-- 6. SEED A RESULT (Tests the View Results logic immediately)
 INSERT INTO result (student_name, score, total_marks, quiz_id)
-VALUES ('Akash', 2, 2, 1);
+VALUES ('Akash', 2, 3, 1);
