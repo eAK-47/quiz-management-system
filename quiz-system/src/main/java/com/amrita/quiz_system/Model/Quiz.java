@@ -21,6 +21,6 @@ public class Quiz {
 
     // Composition
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "quiz_id")
+    @JoinColumn(name = "result_quiz_id")
     private List<Result> results = new ArrayList<>();
 }
