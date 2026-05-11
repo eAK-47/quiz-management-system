@@ -9,7 +9,7 @@ const API_BASE_URL = window.location.origin + '/api';
    ───────────────────────────────────────── */
 
 function goTo(page) {
-    window.location.href = "/";
+    window.location.href = page;
 }
 
 /**
@@ -33,8 +33,7 @@ function logout() {
 async function studentLogin(event) {
     event.preventDefault();
     const id = document.getElementById('student-id').value.trim();
-    const name = document.getElementById('student-name').value.trim();
-    const password = document.getElementById('student-password').value; // Requires HTML update
+    const password = document.getElementById('student-password').value;
     const err = document.getElementById('login-error');
 
     try {
@@ -53,7 +52,8 @@ async function studentLogin(event) {
         }
     } catch (e) {
         console.error("Backend offline:", e);
-        document.getElementById('no-quiz-msg').style.display = 'block';
+        err.textContent = '⚠️ Cannot connect to server. Please try again.';
+        err.style.display = 'block';
     }
 }
 
@@ -72,7 +72,7 @@ async function teacherLogin(event) {
 
         if (response.ok) {
             const userData = await response.json();
-            setSession('teacher', userData.name, userData.tchrID);
+            setSession('teacher', userData.name, userData.tchrid);
             goTo('Teacher.html');
         } else {
             err.style.display = 'block';
@@ -172,7 +172,7 @@ async function publishQuiz(event) {
 
     if (response.ok) {
         alert("✅ Quiz Successfully Published to Database!");
-        goTo('QuizLogin.html');
+        goTo('index.html');
     }
 }
 
