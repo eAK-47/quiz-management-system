@@ -47,7 +47,7 @@
         <h2 id="result-title">Quiz Completed!</h2>
         <p id="result-detail" style="font-size: 1.2rem; font-weight: bold;"></p>
         <br>
-        <button type="button" class="btn-submit" onclick="goTo('Student.html')">
+        <button type="button" class="btn-submit" onclick="document.getElementById('result-panel').style.display='none'; document.getElementById('quiz-selection-section').style.display='block'; initStudentDashboard();">
             Attempt Another Quiz
         </button>
     </div>
