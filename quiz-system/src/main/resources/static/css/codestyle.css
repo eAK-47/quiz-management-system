@@ -421,6 +421,58 @@ h1, h2, h3, h4 { font-family: var(--font-head); line-height: 1.25; }
 
 
 /* ============================================================
+   QUIZ TITLE INPUT  (Teacher.html)
+   ============================================================ */
+
+.quiz-title-section {
+    margin-bottom: 28px;
+}
+
+.main-title-input {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border);
+    font-size: 1.15rem;
+    font-family: var(--font-head);
+    font-weight: 600;
+    background: var(--white);
+    color: var(--text-dark);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow-sm);
+}
+
+.main-title-input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+}
+
+.main-title-input::placeholder { color: var(--text-muted); font-weight: 400; }
+
+
+/* ============================================================
+   SECTION HEADER  (Student.html)
+   ============================================================ */
+
+.section-header {
+    margin-bottom: 24px;
+}
+
+.section-header h3 {
+    font-size: 1.4rem;
+    color: var(--navy);
+    margin-bottom: 6px;
+}
+
+.section-header p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+
+/* ============================================================
    DASHBOARD CONTAINER & CARDS
    ============================================================ */
 
@@ -716,7 +768,7 @@ form#quiz-form .btn-submit {
 }
 
 .btn-back {
-    background:green;
+    background: var(--navy-mid);
     color: var(--white) !important;
     border: 1.5px solid rgba(255,255,255,0.28) !important;
     box-shadow: none !important;
