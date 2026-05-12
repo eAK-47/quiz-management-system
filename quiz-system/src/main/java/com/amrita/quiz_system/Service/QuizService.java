@@ -18,22 +18,22 @@ public class QuizService {
         int score = 0;
         List<Question> questions = quiz.getQuestions();
 
-        // Loop: "for each Question q in questions" from your sequence diagram [cite: 68]
+        // Loop: "for each Question q in questions" from your sequence diagram
         for (int i = 0; i < questions.size(); i++) {
             Question q = questions.get(i);
-            // checkAnswer(): "checks whether the answer that the student chose is correct" [cite: 102]
+
             if (q.getCorrectOption() == studentChoices.get(i)) {
                 score++;
             }
         }
 
-        // Create Result: "Result is generated" [cite: 129]
+
         Result result = new Result();
         result.setStudentName(studentName);
         result.setScore(score);
         result.setTotalMarks(questions.size());
 
-        // Composition: "Results are strongly tied to the Quiz" [cite: 122, 123]
+        // Composition: "Results are strongly tied to the Quiz"
         quiz.getResults().add(result);
         quizRepository.save(quiz);
 

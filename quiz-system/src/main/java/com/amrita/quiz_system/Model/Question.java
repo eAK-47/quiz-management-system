@@ -13,7 +13,7 @@ public class Question {
 
     private String questionText;
 
-    // Four separate columns instead of String[] (H2 does not support arrays natively)
+
     private String option1;
     private String option2;
     private String option3;
@@ -21,18 +21,12 @@ public class Question {
 
     private int correctOption;
 
-    /**
-     * Returns options as a List for JSON serialization.
-     * The frontend app.js reads q.options[i] — this method satisfies that.
-     */
+
     public List<String> getOptions() {
         return Arrays.asList(option1, option2, option3, option4);
     }
 
-    /**
-     * Accepts the "options" array from the frontend publishQuiz() payload
-     * and maps each element to the four separate DB columns.
-     */
+
     public void setOptions(List<String> options) {
         if (options != null && options.size() >= 4) {
             this.option1 = options.get(0);
